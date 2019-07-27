@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css">
+        <title>Blog</title>
+        <style>
+        
+        @font-face {
+            font-family: 'InkLipquid'; 
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/InkLipquid.woff') format('woff'); 
+            font-weight: normal; 
+            font-style: normal; }
+      
+        .navbar{
+            font-family: InkLipquid;
+            font-size: 2rem;
+            background-color: #AD8EDB;
+        }
+
+        .nanumsquare { 
+            font-family: 'NanumSquare', sans-serif !important; 
+        }
+        </style>
+
+    </head>
+    <body>
+
+            <header>
+
+
+                    <nav class="navbar navbar-expand-lg navbar-dark">
+                            <div class="container">
+                                <a class="navbar-brand" style="font-size: 3rem;" href="{% url 'home' %}">Wonlog</a>
+                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                                    <ul class="navbar-nav ml-auto">
+                                        <li class="nav-item">
+                                            <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
+                                            </li>
+                                        <li class="nav-item">
+                                            <a class="nav-item nav-link" href="{% url 'portfolio' %}">Portfolio</a>
+                                        </li>
+                                        {% if user.is_authenticated %}
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle active" id="navbarDropdown" role="button" data-toggle="dropdown"
+                                                aria-haspopup="true" aria-expanded="false">MyMenu</a>
+                                            <div class="dropdown-menu nanumsquare active" aria-labelledby="navbarDropdown">
+                                                <a class="dropdown-item">Welcome, {{user.username }}!</a>
+                                                <a class="dropdown-item" href="{% url 'new' %}">NewPost</a>
+                                                <a class="dropdown-item" href="javascript:{document.getElementById('logout').submit()}">LogOut</a>
+                                                <form id="logout" method="POST" action="{% url 'logout' %}">
+                                                    {% csrf_token %} <input type="hidden" />
+                                                </form>
+                                            </div>
+                                        </li>
+                                        {% else %}
+                                        <li class="nav-item">
+                                            <a class="nav-item nav-link" href="{% url 'signup' %}">SignUp</a>
+           
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-item nav-link" href="{% url 'login' %}">LogIn</a>
+                                        </li>
+                                        {% endif %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </nav>
+        
+            </header>
+        
+
+
+        <br>
+        <div class="container nanumsquare">
+
+
+
+
+
+                <div class='container'>
+                        <form method='POST'>
+                            {% csrf_token %}
+                            <table>
+                                {{form.as_table}}
+                            </table>
+                            <br>
+                            <input class="btn btn-dark" type="submit" value="Post" onclick="return confirm('게시물을 저장하시겠습니까?')">
+                        </form>
+                    </div>
+
+
+        </div>
+        
+    </body>
+
+
+
+</html>
